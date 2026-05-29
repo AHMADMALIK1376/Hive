@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="search-container">
+    <h1>Search Results</h1>
+    {% if query %}
+    <p>Showing results for "<strong>{{ query }}</strong>"</p>
+    {% endif %}
+    
+    <div class="search-results">
+        {% for user in users %}
+        <div class="user-card">
+            <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="user-avatar">
+            <div class="user-info">
+                <a href="{% url 'profile' user.username %}" class="user-username">{{ user.username }}</a>
+                <p class="user-bio">{{ user.profile.bio|truncatechars:100 }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="empty-state">No users found. Try a different search! 🐝</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
