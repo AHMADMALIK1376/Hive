@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="feed-container">
+    <div class="feed-header">
+        <h1>Latest Buzz</h1>
+    </div>
+    <div class="posts-list">
+        {% for post in posts %}
+        <div class="post-card">
+            <div class="post-header">
+                <img src="{{ post.user.profile.avatar.url }}" alt="Avatar" class="post-avatar">
+                <div class="post-user-info">
+                    <a href="{% url 'profile' post.user.username %}" class="post-username">{{ post.user.username }}</a>
+                    <span class="post-time">{{ post.created_at|timesince }} ago</span>
+                </div>
+            </div>
+            <div class="post-body">
+                <p>{{ post.content }}</p>
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Post image" class="post-image">
+                {% endif %}
+            </div>
+            <div class="post-actions">
+                <span class="action-item">❤️ {{ post.likes.count }} Likes</span>
+                <span class="action-item">💬 {{ post.comments.count }} Comments</span>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <p>No posts yet. Start buzzing! 🐝</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
